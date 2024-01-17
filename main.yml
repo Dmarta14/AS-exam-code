@@ -1,26 +1,27 @@
 name: ej1-workflow
 on:
 push:
-    branches:
-      - main
+     branches: [ master ]
 
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
-            - name: Setup Node
-              uses: actions/setup-node@v4
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
               with:
-                  node-version: 18
+                node-version: 18
             - name: Install dependencies
-              run: pip install pytest
+              run: npm i
             - name: Run tests
-              run: pytest test.py
-            - name: CloudPosse
+              run: npm test
+            - name: Checkout
+              uses: actions/checkout@v3
+  
+            - name: Tests
               uses: cloudposse/github-action-docker-compose-test-run@main
               with:
-                  context: .
-                  file: Dockerfile
-                  push: false
+                file: test/docker-compose.yml
+                service: app
+                command: test/unit-tests.sh
