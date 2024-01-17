@@ -1,7 +1,7 @@
 name: ej1-workflow
 on:
-push:
-     branches: [ master ]
+     push:
+          branches: [ master ]
 
 jobs:
     build:
